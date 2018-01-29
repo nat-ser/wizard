@@ -3,3 +3,9 @@ Style/StringLiterals:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#consistent-string-literals'
   EnforcedStyle: double_quotes
   Enabled: true
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
