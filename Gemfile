@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.4.2'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -35,16 +37,17 @@ gem 'jbuilder', '~> 2.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'annotate'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rubocop', '~> 0.52.1', require: false
+  gem 'rspec-rails', '~> 3.7'
   gem 'pry-rails'
 end
 
 group :development do
-  gem 'annotate'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -55,7 +58,7 @@ end
 
 group :test do
   gem 'faker'
-  gem "factory_girl_rails", "~> 4.0"
+  gem "factory_bot", "~> 4.0"
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

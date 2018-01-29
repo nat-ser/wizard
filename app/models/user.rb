@@ -17,4 +17,5 @@
 #
 
 class User < ApplicationRecord
+  validates :first_name, :last_name, :email, :age, :height_in_inches, :fave_color, presence: true
 end
