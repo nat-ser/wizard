@@ -40,7 +40,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rubocop', '~> 0.52.1', require: false
-  gem 'rspec-rails', '~> 3.7'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -53,5 +53,9 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :test do
+  gem 'faker'
+  gem "factory_girl_rails", "~> 4.0"
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
