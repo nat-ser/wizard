@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe User, type: :model do
+describe User do
   context "with all required attributes" do
     it "is created successfully" do
       user = User.create(first_name: "nat",
