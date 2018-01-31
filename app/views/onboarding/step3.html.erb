@@ -1,10 +1,14 @@
 <div class="container-fluid">
   <h1>Create a Profile, you will not regret it</h1>
-  <%= simple_form_for(@user, url: validate_step_path) do |f| %>
+  <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
     <%= f.error_notification %>
 
     <div class="form-inputs">
       <%= f.input :age_range, collection: ["17 or younger", "18-25", "26-35", "36-45", "46 or older"], label: "Age" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :weight_in_lb %>
     </div>
 
     <%= label_tag "Height" %>
