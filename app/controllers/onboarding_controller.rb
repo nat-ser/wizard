@@ -22,7 +22,7 @@ class OnboardingController < ApplicationController
     @user = User.new(user_params)
     if @user.valid?(current_step)
       session[:user] = user_params
-      @step_count += 1
+      increment_current_step
       redirect_to action: current_step
     else
       render current_step
@@ -35,13 +35,12 @@ class OnboardingController < ApplicationController
   end
 
   def step_count
-    @step_count ||= 1
+    session["step_count"] ||= 1
   end
 
-  # def increment_current_step
-  #   binding.pry
-  #   @step_count += 1
-  # end
+  def increment_current_step
+    session["step_count"] += 1
+  end
 
   def current_step
     case step_count
