@@ -16,6 +16,7 @@ class OnboardingController < ApplicationController
   end
 
   private
+
   def user
     @user = User.new(session[:user])
   end
@@ -25,7 +26,7 @@ class OnboardingController < ApplicationController
   end
 
   def steps
-    ["step1", "step2", "step3", "step4"]
+    %w[step1 step2 step3 step4]
   end
 
   def current_step
@@ -33,7 +34,6 @@ class OnboardingController < ApplicationController
   end
 
   def next_step
-    next_step_index = steps.index(current_step) + 1
-    steps[next_step_index]
+    steps[steps.index(current_step) + 1]
   end
 end

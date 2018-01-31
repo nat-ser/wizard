@@ -1,7 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 describe "second page", type: :feature do
-
   before do
     visit onboarding_step2_path
   end
@@ -38,7 +39,6 @@ describe "second page", type: :feature do
     click_button "Next"
 
     expect(current_path).to eq(onboarding_step3_path)
-
 
     visit onboarding_step2_path
     expect(find_field("Email").value).to eq("dancer.numberone@gmail.com")
