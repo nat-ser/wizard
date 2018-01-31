@@ -1,0 +1,12 @@
+<div class="container-fluid">
+  <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :fave_color, collection: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"], label: "Favorite Color" %>
+    </div>
+
+    <%= render "bottom_menu", f: f, step: "step4", submit_text: "Finish" %>
+  <% end %>
+</div>
+<%= javascript_include_tag "onboarding/step4" %>

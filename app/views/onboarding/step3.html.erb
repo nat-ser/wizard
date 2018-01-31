@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :age_range, collection: ["17 or younger", "18-25", "26-35", "36-45", "46 or older"], label: "Age" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :weight_in_lb %>
+    </div>
+
+    <div class="form-inputs">
+      <%= label_tag "Height" %>
+      <%= f.input :height_in_inches, as: :hidden, value: nil %>
+      <%= label_tag "Feet" %>
+      <%= number_field_tag :feet %>
+
+      <%= label_tag "Inches" %>
+      <%= number_field_tag :inches %>
+    </div>
+
+    <%= render "bottom_menu", f: f, step: "step3", submit_text: "Next" %>
+  <% end %>
+</div>

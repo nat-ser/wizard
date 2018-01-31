@@ -1,0 +1,6 @@
+<nav class="breadcrumb">
+  <%= link_to "Step 1", onboarding_step1_path, class: "breadcrumb-item #{'active' if params['action'] == 'step1'}" %>
+  <%= link_to "Step 2", onboarding_step2_path, class: "breadcrumb-item #{'active' if params['action'] == 'step2'}" %>
+  <%= link_to "Step 3", onboarding_step3_path, class: "breadcrumb-item #{'active' if params['action'] == 'step3'}" %>
+  <%= link_to "Step 4", onboarding_step4_path, class: "breadcrumb-item #{'active' if params['action'] == 'step4'}" %>
+</nav>
