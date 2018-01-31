@@ -22,7 +22,7 @@ class OnboardingController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:last_name, :first_name, :email)
+    params.require(:user).permit(:last_name, :first_name, :email, :age_range)
   end
 
   def steps

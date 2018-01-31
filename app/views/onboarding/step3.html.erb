@@ -1,1 +1,26 @@
-step2.html.erb
+<div class="container-fluid">
+  <h1>Create a Profile, you will not regret it</h1>
+  <%= simple_form_for(@user, url: validate_step_path) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :age_range, collection: ["17 or younger", "18-25", "26-35", "36-45", "46 or older"], label: "Age" %>
+    </div>
+
+    <%= label_tag "Height" %>
+
+        <div class="form-inputs">
+          <%= label_tag "Feet" %>
+          <%= number_field_tag :feet %>
+
+          <%= label_tag "Inches" %>
+          <%= number_field_tag :inches%>
+        </div>
+
+    <%= hidden_field_tag :current_step, "step3" %>
+
+    <div class="form-actions">
+      <%= f.submit "Next", class: "btn btn-outline-primary" %>
+    </div>
+  <% end %>
+</div>

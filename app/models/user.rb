@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -8,7 +7,7 @@
 #  first_name       :string
 #  last_name        :string
 #  email            :string
-#  age              :integer
+#  age_range        :string
 #  height_in_inches :integer
 #  weight_in_lb     :integer
 #  fave_color       :string
@@ -25,6 +24,17 @@ class User < ApplicationRecord
             },
             on: :step2
 
-  validates :age, :height, presence: true, on: :step3
+  validates :age_range, :height_in_inches, presence: true, on: :step3
+  validates :height_in_inches, numericality: { only_integer: true }
   validates :fave_color, presence: true, on: :step4
+
+  # for the final encompassing validation at the end
+  validates :first_name,
+            :last_name,
+            :email,
+            :age_range,
+            :height_in_inches,
+            :fave_color,
+            presence: true,
+            on: :create
 end
