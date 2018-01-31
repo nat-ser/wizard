@@ -1,1 +1,14 @@
-step2.html.erb
+<div class="container-fluid">
+  <h1>Create a Profile, you will not regret it</h1>
+  <%= simple_form_for(@user, url: validate_step_path) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.email_field :email, required: true %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Next", class: "btn btn-outline-primary" %>
+    </div>
+  <% end %>
+</div>

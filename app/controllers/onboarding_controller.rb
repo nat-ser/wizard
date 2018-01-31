@@ -6,12 +6,7 @@ class OnboardingController < ApplicationController
   end
 
   def step2
-    @user = User.new(user_params)
-    if @user.valid?(:step1)
-      session[:user] = user_params
-    else
-      render :step1
-    end
+    @user = User.new(session[:user])
   end
 
   def step3
@@ -23,9 +18,19 @@ class OnboardingController < ApplicationController
   def thanks
   end
 
+  def validate_step
+    @user = User.new(user_params)
+    if @user.valid?(:step1)
+      session[:user] = user_params
+      redirect_to onboarding_step2_url
+    else
+      render :step1
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:last_name, :first_name)
+    params.require(:user).permit(:last_name, :first_name, :email)
   end
 end

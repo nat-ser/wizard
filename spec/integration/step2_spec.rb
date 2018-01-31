@@ -3,14 +3,14 @@ require 'rails_helper'
 describe "second page", type: :feature do
 
   before do
-    visit "/step2"
+    visit onboarding_step2_path
   end
 
-  it "form validates presense of both first and last name" do
+  it "form validates presense of email" do
     click_button "Next"
 
     expect(current_path).to eq("/step2")
-    expect(page).to have_content("Please enter your email")
+    expect(page).to have_content("can't be blank")
   end
 
   it "form validates the format of the email" do
