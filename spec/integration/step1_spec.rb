@@ -22,6 +22,6 @@ describe "first page", type: :feature do
     expect(current_path).to eq(onboarding_step2_path)
 
     visit onboarding_step1_path
-    expect(current_path).to eq(onboarding_step1_path)
+    expect(find_field("First name").value).to eq("Napolean")
   end
 end

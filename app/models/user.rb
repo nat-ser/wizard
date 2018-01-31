@@ -19,6 +19,12 @@
 class User < ApplicationRecord
   validates :first_name, :last_name, presence: true, on: :step1
   validates :email, presence: true, on: :step2
+  validates :email,
+            format: {
+              with: /\A([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})\z/i
+              },
+              on: :step2
+
   validates :age, :height, presence: true, on: :step3
   validates :fave_color, presence: true, on: :step4
 end

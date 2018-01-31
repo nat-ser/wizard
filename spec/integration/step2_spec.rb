@@ -9,7 +9,6 @@ describe "second page", type: :feature do
   it "form validates presense of email" do
     click_button "Next"
 
-    expect(current_path).to eq("/step2")
     expect(page).to have_content("can't be blank")
   end
 
@@ -17,7 +16,7 @@ describe "second page", type: :feature do
     fill_in "Email", with: "dancer"
     click_button "Next"
 
-    expect(page).to have_content("Please enter a valid email")
+    expect(page).to have_content("is invalid")
   end
 
   it "form can be submitted succesfully navigating user to next page" do
@@ -25,12 +24,23 @@ describe "second page", type: :feature do
     fill_in "Email", with: "dancer.numberone@gmail.com"
     click_button "Next"
 
-    expect(current_path).to eq("/step3")
+    expect(current_path).to eq(onboarding_step3_path)
   end
 
-  it "back button take user back to previous step" do
+  it "back button takes user back to previous step" do
     click_button "Back"
 
-    expect(current_path).to eq("/step1")
+    expect(current_path).to eq(onboarding_step1_path)
+  end
+
+  it "correctly-filled form submits and remembers info on return" do
+    fill_in "Email", with: "dancer.numberone@gmail.com"
+    click_button "Next"
+
+    expect(current_path).to eq(onboarding_step3_path)
+
+
+    visit onboarding_step2_path
+    expect(find_field("Email").value).to eq("dancer.numberone@gmail.com")
   end
 end

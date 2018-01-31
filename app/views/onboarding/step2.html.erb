@@ -4,11 +4,14 @@
     <%= f.error_notification %>
 
     <div class="form-inputs">
-      <%= f.email_field :email, required: true %>
+      <%= f.input :email, required: true %>
     </div>
+
+    <%= hidden_field_tag :current_step, "step2" %>
 
     <div class="form-actions">
       <%= f.submit "Next", class: "btn btn-outline-primary" %>
     </div>
   <% end %>
+  <%= button_to "Back", onboarding_step1_path, method: :get %>
 </div>

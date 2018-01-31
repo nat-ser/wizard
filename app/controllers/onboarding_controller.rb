@@ -1,29 +1,15 @@
 # frozen_string_literal: true
 
 class OnboardingController < ApplicationController
-  before_action :user, :step_count
-
-  def step1
-  end
-
-  def step2
-  end
-
-  def step3
-  end
-
-  def step4
-  end
-
+  before_action :user
   def thanks
   end
 
   def validate_step
     @user = User.new(user_params)
-    if @user.valid?(current_step)
+    if @user.valid?(current_step.to_sym)
       session[:user] = user_params
-      increment_current_step
-      redirect_to action: current_step
+      redirect_to action: next_step
     else
       render current_step
     end
@@ -34,28 +20,20 @@ class OnboardingController < ApplicationController
     @user = User.new(session[:user])
   end
 
-  def step_count
-    session["step_count"] ||= 1
+  def user_params
+    params.require(:user).permit(:last_name, :first_name, :email)
   end
 
-  def increment_current_step
-    session["step_count"] += 1
+  def steps
+    ["step1", "step2", "step3", "step4"]
   end
 
   def current_step
-    case step_count
-      when 1
-        :step1
-      when 2
-        :step2
-      when 3
-        :step3
-      when 4
-        :step4
-    end
+    params["current_step"]
   end
 
-  def user_params
-    params.require(:user).permit(:last_name, :first_name, :email)
+  def next_step
+    next_step_index = steps.index(current_step) + 1
+    steps[next_step_index]
   end
 end
