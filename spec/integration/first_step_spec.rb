@@ -14,7 +14,7 @@ describe "first page", type: :feature do
     expect(page).to have_content("can't be blank")
   end
 
-  it "form filled with required fields can be advanced to next step remembering information if user returns" do
+  it "correctly-filled form submits and remembers info on return" do
     fill_in "First name", with: "Napolean"
     fill_in "Last name", with: "Dynamite"
     click_button "Next"
@@ -23,6 +23,5 @@ describe "first page", type: :feature do
 
     visit onboarding_step1_path
     expect(current_path).to eq(onboarding_step1_path)
-
   end
 end
