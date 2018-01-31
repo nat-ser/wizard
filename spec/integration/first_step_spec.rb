@@ -4,22 +4,24 @@ require "rails_helper"
 
 describe "first page", type: :feature do
   before do
-    visit "/step1"
+    visit onboarding_step1_path
   end
 
   it "form validates presense of both first and last name" do
-    fill_in "First Name", with: "Napolean"
+    fill_in "First name", with: "Napolean"
     click_button "Next"
 
-    expect(current_path).to eq("/step1")
-    expect(page).to have_content("Please enter your last name")
+    expect(page).to have_content("can't be blank")
   end
 
-  it "form can be submitted succesfully navigating user to next page" do
-    fill_in "First Name", with: "Napolean"
-    fill_in "Last Name", with: "Dynamite"
+  it "correctly-filled form submits and remembers info on return" do
+    fill_in "First name", with: "Napolean"
+    fill_in "Last name", with: "Dynamite"
     click_button "Next"
 
-    expect(current_path).to eq("/step2")
+    expect(current_path).to eq(onboarding_step2_path)
+
+    visit onboarding_step1_path
+    expect(current_path).to eq(onboarding_step1_path)
   end
 end
