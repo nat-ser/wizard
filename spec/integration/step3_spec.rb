@@ -22,7 +22,7 @@ describe "third page", type: :feature do
     expect(current_path).to eq(onboarding_step4_path)
   end
 
-  it "validates that weight for numericality" do
+  it "validates weight for numericality" do
     fill_in "Weight", with: "skinny"
     click_button "Next"
 
@@ -34,7 +34,7 @@ describe "third page", type: :feature do
     fill_in "inches", with: "meow"
     click_button "Next"
 
-    expect(page).to have_content("Please enter your height as a number")
+    expect(page).to have_content("is not a number")
   end
 
   it "correctly-filled form submits and remembers info on return" do
@@ -48,7 +48,9 @@ describe "third page", type: :feature do
     expect(current_path).to eq(onboarding_step4_path)
 
     visit onboarding_step3_path
-    expect(find_field("Weight").value).to eq("160")
+    expect(find_field("feet").value).to eq("5")
+    expect(find_field("inches").value).to eq("3")
+
   end
 
   it "back button takes user back to previous step" do
