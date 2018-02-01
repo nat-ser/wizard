@@ -3,16 +3,17 @@
 #
 # Table name: users
 #
-#  id               :integer          not null, primary key
-#  first_name       :string
-#  last_name        :string
-#  email            :string
-#  age_range        :string
-#  height_in_inches :integer
-#  weight_in_lb     :integer
-#  fave_color       :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id           :integer          not null, primary key
+#  first_name   :string
+#  last_name    :string
+#  email        :string
+#  age_range    :string
+#  weight_in_lb :integer
+#  fave_color   :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  feet_tall    :integer
+#  inches_tall  :integer
 #
 
 class User < ApplicationRecord
@@ -24,8 +25,8 @@ class User < ApplicationRecord
             },
             on: :step2
 
-  validates :age_range, :height_in_inches, presence: true, on: :step3
-  validates :height_in_inches, numericality: { only_integer: true }, on: :step3
+  validates :age_range, :feet_tall, presence: true, on: :step3
+  validates :feet_tall, :inches_tall, numericality: { only_integer: true }, allow_blank: true, on: :step3
   validates :weight_in_lb, numericality: { only_integer: true }, allow_blank: true, on: :step3
   validates :fave_color, presence: true, on: :step4
 
@@ -34,14 +35,17 @@ class User < ApplicationRecord
             :last_name,
             :email,
             :age_range,
-            :height_in_inches,
+            :feet_tall,
+            :inches_tall,
             :fave_color,
             presence: true,
             on: :create
 
-  def derive_height_in_inches(feet, inches)
-    return nil if feet == 0 || inches == 0
-    @height_in_inches = feet * 12 + inches
+  def height_in_inches
+    @height_in_inches ||= feet_tall * 12 + inches_tall.presence
   end
 
+  def height_string_feet_and_inches
+    @height_string_feet_and_inches ||= "#{feet_tall}'#{inches_tall}\""
+  end
 end
