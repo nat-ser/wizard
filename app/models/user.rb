@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   validates :age_range, :height_in_inches, presence: true, on: :step3
   validates :height_in_inches, numericality: { only_integer: true }, on: :step3
-  validates :weight_in_lb, numericality: { only_integer: true }, on: :step3
+  validates :weight_in_lb, numericality: { only_integer: true }, allow_blank: true, on: :step3
   validates :fave_color, presence: true, on: :step4
 
   # for the final encompassing validation at the end
@@ -40,6 +40,7 @@ class User < ApplicationRecord
             on: :create
 
   def derive_height_in_inches(feet, inches)
+    return if feet == 0 || inches == 0
     @height_in_inches = feet * 12 + inches
   end
 

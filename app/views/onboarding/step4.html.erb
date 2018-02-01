@@ -1,1 +1,21 @@
-step4.hrml.erb
+<div class="container-fluid">
+  <%= javascript_include_tag "onboarding/step4" %>
+
+  <h1>Create a Profile, you will not regret it</h1>
+  <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :fave_color, collection: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"], label: "Favorite Color" %>
+    </div>
+
+
+    <%= hidden_field_tag :current_step, "step4" %>
+
+    <div class="form-actions">
+      <%= f.submit "Next", class: "btn btn-outline-primary" %>
+    </div>
+  <% end %>
+  <%= button_to "Back", onboarding_step2_path, method: :get %>
+
+</div>

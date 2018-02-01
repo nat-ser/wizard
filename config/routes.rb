@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   root to: "onboarding#step1"
-  post "/thanks", to: "onboarding#thanks"
+  get "/thanks", to: "onboarding#thanks"
   get "/onboarding/step1", to: "onboarding#step1"
   get "/onboarding/step2", to: "onboarding#step2"
   get "/onboarding/step3", to: "onboarding#step3"

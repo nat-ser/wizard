@@ -11,15 +11,16 @@
       <%= f.input :weight_in_lb %>
     </div>
 
-    <%= label_tag "Height" %>
+    <div class="form-inputs">
+      <%= label_tag "Height" %>
+      <%= f.input :height_in_inches, as: :hidden, value: nil %>
+      <%= label_tag "Feet" %>
+      <%= number_field_tag :feet %>
 
-        <div class="form-inputs">
-          <%= label_tag "Feet" %>
-          <%= number_field_tag :feet %>
+      <%= label_tag "Inches" %>
+      <%= number_field_tag :inches %>
+    </div>
 
-          <%= label_tag "Inches" %>
-          <%= number_field_tag :inches%>
-        </div>
 
     <%= hidden_field_tag :current_step, "step3" %>
 
@@ -27,4 +28,6 @@
       <%= f.submit "Next", class: "btn btn-outline-primary" %>
     </div>
   <% end %>
+  <%= button_to "Back", onboarding_step2_path, method: :get %>
+
 </div>
