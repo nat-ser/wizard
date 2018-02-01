@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "fourth page", type: :feature do
   before do
-    visit "/step4"
+    visit onboarding_step4_path
   end
 
   it "form validates presense of favorite color" do

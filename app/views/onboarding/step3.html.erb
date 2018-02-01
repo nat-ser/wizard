@@ -11,13 +11,14 @@
     </div>
 
     <div class="form-inputs">
-      <abbr title="required">*</abbr>
-      <%= f.label "Height" %><br>
+      <%= f.input :height_in_inches, as: :hidden, value: nil, required: true %>
+      <%= f.label :height_in_inches, label: "Height" %><br>
       <%= label_tag "Feet" %>
-      <%= number_field_tag :feet%>
+      <%= text_field_tag :feet %>
 
       <%= label_tag "Inches" %>
-      <%= number_field_tag :inches%>
+      <%= text_field_tag :inches %>
+      <%= f.error :height_in_inches, class: "has-error" %>
     </div>
 
     <%= render "bottom_menu", f: f, step: "step3", submit_text: "Next" %>

@@ -40,7 +40,7 @@ class User < ApplicationRecord
             on: :create
 
   def derive_height_in_inches(feet, inches)
-    return if feet == 0 || inches == 0
+    return nil if feet == 0 || inches == 0
     @height_in_inches = feet * 12 + inches
   end
 

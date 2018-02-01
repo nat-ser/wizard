@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "/onboarding/step3", to: "onboarding#step3"
   get "/onboarding/step4", to: "onboarding#step4"
 
+  post "/create", to: "onboarding#create"
   post "/validate_step", to: "onboarding#validate_step"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -7,41 +7,46 @@ class OnboardingController < ApplicationController
 
 
   def validate_step
-    params = @session_user.attributes.merge(user_params.to_h)
-    @user_with_all_remembered_fields  = User.new(params)
-    if current_step == "step3"
-      set_user_height
-    end
-
-    if @user_with_all_remembered_fields.valid?(current_step.to_sym)
-      if current_step == "step4"
-        create_user(@user_with_all_remembered_fields)
-        flash[:success] = "Good job"
-      else
-        session[:user] = @user_with_all_remembered_fields.attributes
-
-      end
+    # params = @session_user.attributes.merge(user_params.to_h)
+    # @user_with_all_remembered_fields  = User.new(params)
+    @user = User.new(user_params)
+    set_user_height if current_step == "step3"
+    if @user.valid?(current_step.to_sym)
+      user_params.each { |p, v| session["user"][p] = v }
       redirect_to action: next_step
     else
-      @session_user = @user_with_all_remembered_fields
+      @session_user = @user
+      render current_step
+    end
+  end
+
+  def create
+    @user = User.new(user_params)
+    if @user.save(context: current_step.to_sym)
+      reset_session
+      flash[:success] = "Good job"
+      redirect_to thanks_url
+    else
+      @session_user = @user
       render current_step
     end
   end
 
   private
-  def create_user(user)
-    user.save
-    reset_session
-  end
 
   def session_user
-    @session_user = User.new(session[:user])
+    session["user"] = {} if session["user"].nil?
+    @session_user = User.new(session["user"])
   end
 
   def set_user_height
-    feet, inches = params["feet"].to_i, params["inches"].to_i
-    height = @user_with_all_remembered_fields.derive_height_in_inches(feet, inches)
-    @user_with_all_remembered_fields.height_in_inches = height
+    return unless params["feet"].present? || params["inches"].present?
+    if params["feet"].is_a?(Integer) || params["feet"].is_a?(Integer)
+      feet, inches = params["feet"].to_i, params["inches"].to_i
+      @user.height_in_inches = @user.derive_height_in_inches(feet, inches)
+    else
+      @user.height_in_inches = "string"
+    end
   end
 
   def user_params
