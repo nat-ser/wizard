@@ -1,5 +1,5 @@
+<h4 class="text-center">Get ready for an unforgettable journey</h4>
 <div class="container-fluid">
-  <h1>Create a Profile, you will not regret it</h1>
   <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
     <%= f.error_notification %>
 
@@ -10,8 +10,6 @@
 
     <%= hidden_field_tag :current_step, "step1" %>
 
-    <div class="form-actions">
-      <%= f.submit "Next", class: "btn btn-outline-primary" %>
-    </div>
+    <%= f.submit "Next", class: "btn btn-primary btn-lg" %>
   <% end %>
 </div>
