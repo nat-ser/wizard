@@ -3,16 +3,17 @@
 #
 # Table name: users
 #
-#  id               :integer          not null, primary key
-#  first_name       :string
-#  last_name        :string
-#  email            :string
-#  age_range        :string
-#  height_in_inches :integer
-#  weight_in_lb     :integer
-#  fave_color       :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id           :integer          not null, primary key
+#  first_name   :string
+#  last_name    :string
+#  email        :string
+#  age_range    :string
+#  weight_in_lb :integer
+#  fave_color   :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  feet_tall    :integer
+#  inches_tall  :integer
 #
 
 require "rails_helper"
