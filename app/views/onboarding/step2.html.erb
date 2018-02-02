@@ -6,6 +6,6 @@
       <%= f.input :email, required: true %>
     </div>
 
-    <%= render "bottom_menu", f: f, step: "step2", submit_text: "Next" %>
+    <%= render "bottom_menu", f: f, step: "step2", submit_text: "Next", previous_step_path: onboarding_step1_path %>
   <% end %>
 </div>

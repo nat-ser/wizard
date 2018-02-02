@@ -16,6 +16,6 @@
       <%= f.input :inches_tall, label: "Inches", required: true %>
     </div>
 
-    <%= render "bottom_menu", f: f, step: "step3", submit_text: "Next" %>
+    <%= render "bottom_menu", f: f, step: "step3", submit_text: "Next", previous_step_path: onboarding_step2_path %>
   <% end %>
 </div>

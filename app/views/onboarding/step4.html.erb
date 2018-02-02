@@ -6,7 +6,7 @@
       <%= f.input :fave_color, collection: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"], label: "Favorite Color" %>
     </div>
 
-    <%= render "bottom_menu", f: f, step: "step4", submit_text: "Finish" %>
+    <%= render "bottom_menu", f: f, step: "step4", submit_text: "Finish", previous_step_path: onboarding_step3_path %>
   <% end %>
 </div>
 <%= javascript_include_tag "onboarding/step4" %>
