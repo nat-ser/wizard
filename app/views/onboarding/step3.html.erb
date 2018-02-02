@@ -11,9 +11,9 @@
     </div>
 
     <div class="form-inputs">
-      <%= label_tag "Height" %>
+      <%= f.label "Height", required: true %>
       <%= f.input :feet_tall, label: "Feet", required: true %>
-      <%= f.input :inches_tall, label: "Inches", required: true %>
+      <%= f.input :inches_tall, label: "Inches"%>
     </div>
 
     <%= render "bottom_menu", f: f, step: "step3", submit_text: "Next", previous_step_path: onboarding_step2_path %>

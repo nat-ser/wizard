@@ -16,7 +16,7 @@ $(function() {
   }
 
   function faveColorTextInputHtml() {
-    return "<input type='text' name='user[fave_color]' id='user_fave_color' class='form-control'>"
+    return "<input type='text' name='user[fave_color]' class='form-control'>"
   }
 
   bindFaveColorOtherSelection();
