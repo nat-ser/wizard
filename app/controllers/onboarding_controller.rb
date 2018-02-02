@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class OnboardingController < ApplicationController
-  before_action :session_user
+  before_action :session_user, except: [ :thanks ]
   def thanks
   end
 
@@ -22,7 +22,8 @@ class OnboardingController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.valid?(current_step.to_sym)
-      validate_entire_user(@user)
+      user_params.each { |p, v| session["user"][p] = v }
+      validate_entire_user
     else
       @session_user = @user
       render current_step
@@ -31,15 +32,14 @@ class OnboardingController < ApplicationController
 
   private
 
-  def validate_entire_user(user)
-    user_params.each { |p, v| session["user"][p] = v }
-    @final_user = User.new(session["user"])
-    if @final_user.save(context: create)
+  def validate_entire_user
+    # validate session user here because it encompasses all of the attrs
+    if @session_user.save(context: :create)
       reset_session
       flash[:success] = "Good job"
       redirect_to thanks_url
     else
-      flash[:error] = "Please make sure you go back to correct: #{@final_user.errors.full_messages}"
+      flash.now[:error] = @session_user.errors.full_messages.join(" / ")
       render current_step
     end
   end

@@ -2,6 +2,10 @@
   <%= simple_form_for(@session_user, url: create_path) do |f| %>
     <%= f.error_notification %>
 
+    <% if flash.now[:error] %>
+      <div class="alert alert-danger"><%= flash.now[:error] %></div>
+    <% end %>
+
     <div class="form-inputs">
       <%= f.input :fave_color, collection: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"], label: "Favorite Color" %>
     </div>

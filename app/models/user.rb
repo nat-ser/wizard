@@ -36,7 +36,6 @@ class User < ApplicationRecord
             :email,
             :age_range,
             :feet_tall,
-            :inches_tall,
             :fave_color,
             presence: true,
             on: :create
