@@ -1,1 +1,16 @@
-step4.hrml.erb
+<div class="container-fluid">
+  <%= simple_form_for(@session_user, url: create_path) do |f| %>
+    <%= f.error_notification %>
+
+    <% if flash.now[:error] %>
+      <div class="alert alert-danger"><%= flash.now[:error] %></div>
+    <% end %>
+
+    <div class="form-inputs">
+      <%= f.input :fave_color, collection: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"], label: "Favorite Color" %>
+    </div>
+
+    <%= render "bottom_menu", f: f, step: "step4", submit_text: "Finish", previous_step_path: onboarding_step3_path %>
+  <% end %>
+</div>
+<%= javascript_include_tag "onboarding/step4" %>

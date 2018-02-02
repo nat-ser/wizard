@@ -1,0 +1,8 @@
+<nav>
+<ul class="breadcrumb">
+  <li class=<%='active' if params['action'] == 'step1'%>><%= link_to "Step 1", onboarding_step1_path %></li>
+  <li class=<%='active' if params['action'] == 'step2'%>><%= link_to "Step 2", onboarding_step2_path %></li>
+  <li class=<%='active' if params['action'] == 'step3'%>><%= link_to "Step 3", onboarding_step3_path %></li>
+  <li class=<%='active' if params['action'] == 'step4'%>><%= link_to "Step 4", onboarding_step4_path %></li>
+</ul>
+</nav>

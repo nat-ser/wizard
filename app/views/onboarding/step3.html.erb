@@ -1,1 +1,21 @@
-step2.html.erb
+<div class="container-fluid">
+  <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :age_range, collection: ["17 or younger", "18-25", "26-35", "36-45", "46 or older"], label: "Age" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :weight_in_lb %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.label "Height", required: true %>
+      <%= f.input :feet_tall, label: "Feet", required: true %>
+      <%= f.input :inches_tall, label: "Inches"%>
+    </div>
+
+    <%= render "bottom_menu", f: f, step: "step3", submit_text: "Next", previous_step_path: onboarding_step2_path %>
+  <% end %>
+</div>

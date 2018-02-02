@@ -4,64 +4,58 @@ require "rails_helper"
 
 describe "third page", type: :feature do
   before do
-    visit "/step3"
+    visit onboarding_step3_path
   end
 
-  it "form validates presense of both first and last name" do
-    select "18-25", from: "user[age_id]"
+  it "form validates presense of age range" do
     click_button "Next"
 
-    expect(current_path).to eq("/step3")
-    expect(page).to have_content("Please enter your age")
+    expect(page).to have_content("can't be blank")
   end
 
-  it "form does not validatte presense of weight" do
-    fill_in "Age", with: 24
-    fill_in "Feet", with: 5
-    fill_in "Inches", with: 3
-    select "18-25", from: "user[age_id]"
+  it "form does not validate presense of weight" do
+    select "18-25", from: "user[age_range]"
+    fill_in "feet", with: 5
+    fill_in "inches", with: 3
     click_button "Next"
 
-    expect(current_path).to eq("/step4")
+    expect(current_path).to eq(onboarding_step4_path)
   end
 
-  it "validates that weight for numericality" do
+  it "validates weight for numericality" do
     fill_in "Weight", with: "skinny"
     click_button "Next"
 
-    expect(page).to have_content("Please enter a numerical weight")
+    expect(page).to have_content("is not a number")
   end
 
-  it "form validates numericality for height feet field" do
-    fill_in "Feet", with: "hi"
-    fill_in "Inches", with: 3
-
-    click_button "Next"
-    expect(page).to have_content("Please enter your height as a number")
-  end
-
-  it "form validates numericality for height feet field" do
-    fill_in "Feet", with: 5
-    fill_in "Inches", with: "meow"
+  it "form validates numericality for height field" do
+    fill_in "feet", with: 5
+    fill_in "inches", with: "meow"
     click_button "Next"
 
-    expect(page).to have_content("Please enter your height as a number")
+    expect(page).to have_content("is not a number")
   end
 
-  it "form can be submitted succesfully navigating user to next page" do
-    select "18-25", from: "user[age_id]"
-    fill_in "Feet", with: 5
-    fill_in "Inches", with: 3
+  it "correctly-filled form submits and remembers info on return" do
+    select "18-25", from: "user[age_range]"
+    fill_in "feet", with: 5
+    fill_in "inches", with: 3
     fill_in "Weight", with: 160
 
     click_button "Next"
 
-    expect(current_path).to eq("/step4")
+    expect(current_path).to eq(onboarding_step4_path)
+
+    visit onboarding_step3_path
+    expect(find_field("feet").value).to eq("5")
+    expect(find_field("inches").value).to eq("3")
+
   end
 
   it "back button takes user back to previous step" do
     click_button "Back"
 
-    expect(current_path).to eq("/step2")
+    expect(current_path).to eq(onboarding_step2_path)
   end
 end
