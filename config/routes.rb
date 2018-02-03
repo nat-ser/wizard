@@ -1,24 +1,5 @@
 # frozen_string_literal: true
 
-
-class Step2Constraint
-  def matches?(request)
-    request.session["step_url"] == "/onboarding/step2"
-  end
-end
-
-class Step3Constraint
-  def matches?(request)
-    request.session["step_url"] == "/onboarding/step3"
-  end
-end
-
-class Step4Constraint
-  def matches?(request)
-    request.session["step_url"] == "/onboarding/step4"
-  end
-end
-
 Rails.application.routes.draw do
   get "/thanks", to: "onboarding#thanks"
   get "/onboarding/step1", to: "onboarding#step1"
