@@ -8,13 +8,13 @@ Rails.application.routes.draw do
   get "/onboarding/step4", to: "onboarding#step4"
 
   root to: "onboarding#step2",
-    constraints: Step2Constraint.new
+    constraints: StepConstraint.new("step2")
 
   root to: "onboarding#step3",
-    constraints: Step3Constraint.new
+    constraints: StepConstraint.new("step3")
 
   root to: "onboarding#step4",
-    constraints: Step4Constraint.new
+    constraints: StepConstraint.new("step4")
 
   root to: "onboarding#step1"
 
