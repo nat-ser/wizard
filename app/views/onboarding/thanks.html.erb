@@ -1,1 +1,4 @@
-<p class="alert alert-success"><%= flash[:success] if flash[:success]%></p>
+<div class="container-fluid">
+  <p class="alert alert-success"><%= flash[:success] if flash[:success]%></p>
+  <%= link_to "Want to fill out the form again??", onboarding_step1_path %>
+</div>

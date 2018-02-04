@@ -3,9 +3,6 @@
 class OnboardingController < ApplicationController
   before_action :session_user, except: [ :thanks ]
 
-  def thanks
-  end
-
   def validate_step
     @user = User.new(user_params)
     if @user.valid?(current_step.to_sym)
