@@ -35,8 +35,8 @@ class OnboardingController < ApplicationController
       flash[:success] = "Good job"
       redirect_to thanks_url
     else
-      flash.now[:error] = @session_user.errors.full_messages.join(" / ")
-      render current_step
+      flash[:error] = @session_user.errors.full_messages.join(" / ")
+      redirect_to action: current_step
     end
   end
 
