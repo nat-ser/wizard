@@ -3,7 +3,7 @@
     <%= f.error_notification %>
 
     <% if flash.now[:error] %>
-      <div class="alert alert-danger"><%= flash.now[:error] %></div>
+      <div class="alert alert-danger"><%= flash[:error] %></div>
     <% end %>
 
     <div class="form-inputs color-select">
