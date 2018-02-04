@@ -29,14 +29,12 @@ class User < ApplicationRecord
   validates :feet_tall, :inches_tall, numericality: { only_integer: true }, allow_blank: true, on: :step3
   validates :weight_in_lb, numericality: { only_integer: true }, allow_blank: true, on: :step3
   validates :fave_color, presence: true, on: :step4
-
   # for the final encompassing validation at the end
   validates :first_name,
             :last_name,
             :email,
             :age_range,
             :feet_tall,
-            :fave_color,
             presence: true,
             on: :create
 
