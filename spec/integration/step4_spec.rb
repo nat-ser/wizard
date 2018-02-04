@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require './helpers'
 
-describe "fourth page", type: :feature do
+describe "fourth page", type: :feature, js: true do
   def successfully_complete_flow
     # 1
     visit onboarding_step1_path
@@ -17,8 +16,8 @@ describe "fourth page", type: :feature do
 
     # 3
     select "18-25", from: "user[age_range]"
-    fill_in "feet", with: 5
-    fill_in "inches", with: 3
+    find("#user_feet_tall").set(5)
+
     click_button "Next"
 
     # 4
@@ -35,14 +34,14 @@ describe "fourth page", type: :feature do
 
     expect(page).to have_content("can't be blank")
     select "Other", from: "user[fave_color]"
-    expect(page).to have_content("can't be blank")
+    expect(page).to have_content("Please review the problems below:")
   end
 
   it "form submits successfully with a custom option only if previous required fields have been filled" do
     select "Other", from: "user[fave_color]"
-    fill_in "Enter Custom", with: "special snowflake white"
+    find(".color-text").set("special snowflake white")
     click_button "Finish"
-    expect(page).to have_content("can't be blank")
+    expect(page).to have_content("Please review the problems below:")
 
     successfully_complete_flow
 
@@ -58,23 +57,25 @@ describe "fourth page", type: :feature do
 
     visit onboarding_step3_path
     visit onboarding_step4_path
-    expect(find_field("fave_color").value).to eq("Red")
+    expect(find_field("user[fave_color]").value).to eq("Red")
   end
 
   it "correctly-filled form displays custom input on return correctly" do
     select "Other", from: "user[fave_color]"
-    fill_in "Enter Custom", with: "special snowflake white"
-    click_button "Finish"
+        # save_and_open_page
 
+    find(".color-text").set("special snowflake white")
+    click_button "Finish"
+    save_and_open_page
     visit onboarding_step3_path
     visit onboarding_step4_path
-    expect(find_field("fave_color").value).to eq("special snowflake white")
-    expect(page).to have_content("special snowflake white")
+
+    expect(find_field("user[fave_color]").value).to eq("special snowflake white")
   end
 
 
   it "back button takes user back to previous step" do
-    click_button "Back"
+    click_link "Back"
 
     expect(current_path).to eq(onboarding_step3_path)
   end

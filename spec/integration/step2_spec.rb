@@ -29,7 +29,7 @@ describe "second page", type: :feature do
   end
 
   it "back button takes user back to previous step" do
-    click_button "Back"
+    click_link "Back"
 
     expect(current_path).to eq(onboarding_step1_path)
   end
