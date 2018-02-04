@@ -3,6 +3,10 @@
 class OnboardingController < ApplicationController
   before_action :session_user, except: [ :thanks ]
 
+  def step4
+    @view_user = ViewModels::User.decorate(@session_user)
+  end
+
   def validate_step
     @user = User.new(user_params)
     if @user.valid?(current_step.to_sym)
@@ -17,6 +21,7 @@ class OnboardingController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @view_user = ViewModels::User.decorate(@user)
     if @user.valid?(current_step.to_sym)
       user_params.each { |p, v| session["user"][p] = v }
       validate_entire_user
