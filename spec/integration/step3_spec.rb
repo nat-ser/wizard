@@ -3,6 +3,13 @@
 require "rails_helper"
 
 describe "third page", type: :feature do
+  def input_valid_age_and_height
+    select "18-25", from: "user[age_range]"
+    find("#user_feet_tall").set(5)
+
+    click_button "Next"
+  end
+
   before do
     visit onboarding_step3_path
   end
@@ -14,11 +21,8 @@ describe "third page", type: :feature do
   end
 
   it "form does not validate presense of weight" do
-    select "18-25", from: "user[age_range]"
-    find("#user_feet_tall").set(5)
+    input_valid_age_and_height
 
-    # fill_in ".user_feet_tall", with: 5
-    click_button "Next"
     expect(current_path).to eq(onboarding_step4_path)
   end
 
@@ -38,23 +42,32 @@ describe "third page", type: :feature do
   end
 
   it "correctly-filled form submits and remembers info on return" do
-    select "18-25", from: "user[age_range]"
-    find("#user_feet_tall").set(5)
-    fill_in "Weight", with: 160
+    input_valid_age_and_height
 
-    click_button "Next"
 
     expect(current_path).to eq(onboarding_step4_path)
 
     visit onboarding_step3_path
-    find("#user_feet_tall").set(5)
-    find("#user_inches_tall").set(5)
-
+    expect(page).to have_field("Feet", with: 5)
   end
 
   it "back button takes user back to previous step" do
     click_link "Back"
 
     expect(current_path).to eq(onboarding_step2_path)
+  end
+
+  it "form does not save the user in the db after successful submit" do
+    input_valid_age_and_height
+
+    expect(current_path).to eq(onboarding_step4_path)
+    expect(User.last).to eq(nil)
+  end
+
+  it "preserves user's spot (next unfilled step of wizard)" do
+    input_valid_age_and_height
+
+    visit root_path
+    expect(page).to have_text("Favorite Color")
   end
 end

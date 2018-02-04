@@ -1,31 +1,33 @@
 $(function() {
   // listen for when user select 'other' in dropdown
-  function bindFaveColorOtherSelection() {
+  function bindOtherColorSelection() {
     $("#user_fave_color").change(function(){
       var choice = $(this).find("option:selected").val();
       if (choice == "Other") {
-        replaceSelectFaveColorWithTextInput();
+        replaceSelectColorInputWithCustomInput();
       };
     });
   }
 
-  // remove select input and replace it with text input
-  function replaceSelectFaveColorWithTextInput() {
+  function replaceSelectColorInputWithCustomInput() {
     $(".color-select").hide();
-    $(".color-text").html(faveColorTextInputHtml());
+    $(".color-text").html(customColorInput());
   }
 
-  function faveColorTextInputHtml() {
+  function customColorInput() {
     return "<label class='control-label required' for='user_fave_color'><abbr title='required'>*</abbr>Custom Color</label><input type='text' name='user[fave_color]' class='form-control'>"
   }
 
-  function checkIfTextFilled() {
-    // if the text box has a value that is not "" remove color-select
-    if (($(".color-text input").val()) && $(".color-text input").val().length > 0) {
+  function customColorValuePresence() {
+    return $(".color-text input").val() && $(".color-text input").val().length > 0
+  }
+
+  function hideSelectColorInputIfCustomValue() {
+    if (customColorValuePresence() == true) {
       $(".color-select").hide();
     }
   }
 
-  checkIfTextFilled();
-  bindFaveColorOtherSelection();
+  hideSelectColorInputIfCustomValue();
+  bindOtherColorSelection();
 });
