@@ -11,12 +11,13 @@
     </div>
 
     <div class="form-inputs color-text">
-      <% if (["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"].include?(@session_user.fave_color)) %>
-      <% elsif ((@session_user.fave_color.present?) && !(["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"].include?(@session_user.fave_color))) || (@session_user.fave_color.present?)%>
+      <% if @view_user.display_prefilled_custom_color_form? %>
           <label class='control-label required' for='user_fave_color'><abbr title='required'>*</abbr> Custom Color</label><input type='text' name='user[fave_color]' value='<%=@session_user.fave_color%>' class='form-control'>
       <% end %>
     </div>
+
     <%= render "bottom_menu", f: f, step: "step4", submit_text: "Finish", previous_step_path: onboarding_step3_path %>
   <% end %>
 </div>
+
 <%= javascript_include_tag "onboarding/step4" %>
