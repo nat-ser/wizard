@@ -16,7 +16,7 @@ $(function() {
   }
 
   function faveColorTextInputHtml() {
-    return "<label class='control-label required' for='user_fave_color'><abbr title='required'>*</abbr> Custom Color</label><input type='text' name='user[fave_color]' class='form-control'>"
+    return "<label class='control-label required' for='user_fave_color'><abbr title='required'>*</abbr>Custom Color</label><input type='text' name='user[fave_color]' class='form-control'>"
   }
 
   function checkIfTextFilled() {

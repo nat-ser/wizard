@@ -15,10 +15,10 @@ describe "third page", type: :feature do
 
   it "form does not validate presense of weight" do
     select "18-25", from: "user[age_range]"
-    fill_in "feet", with: 5
-    fill_in "inches", with: 3
-    click_button "Next"
+    find("#user_feet_tall").set(5)
 
+    # fill_in ".user_feet_tall", with: 5
+    click_button "Next"
     expect(current_path).to eq(onboarding_step4_path)
   end
 
@@ -30,8 +30,8 @@ describe "third page", type: :feature do
   end
 
   it "form validates numericality for height field" do
-    fill_in "feet", with: 5
-    fill_in "inches", with: "meow"
+    find("#user_feet_tall").set(5)
+    find("#user_inches_tall").set("mewo")
     click_button "Next"
 
     expect(page).to have_content("is not a number")
@@ -39,8 +39,7 @@ describe "third page", type: :feature do
 
   it "correctly-filled form submits and remembers info on return" do
     select "18-25", from: "user[age_range]"
-    fill_in "feet", with: 5
-    fill_in "inches", with: 3
+    find("#user_feet_tall").set(5)
     fill_in "Weight", with: 160
 
     click_button "Next"
@@ -48,13 +47,13 @@ describe "third page", type: :feature do
     expect(current_path).to eq(onboarding_step4_path)
 
     visit onboarding_step3_path
-    expect(find_field("feet").value).to eq("5")
-    expect(find_field("inches").value).to eq("3")
+    find("#user_feet_tall").set(5)
+    find("#user_inches_tall").set(5)
 
   end
 
   it "back button takes user back to previous step" do
-    click_button "Back"
+    click_link "Back"
 
     expect(current_path).to eq(onboarding_step2_path)
   end

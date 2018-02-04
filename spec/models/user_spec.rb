@@ -25,7 +25,7 @@ describe User do
                          last_name: "seryakova",
                          email: "nat@mail.com",
                          age_range: "18-25",
-                         height_in_inches: 72,
+                         feet_tall: 3,
                          fave_color: "butterfly yellow")
       expect(user.reload.first_name).to eq("nat")
     end
