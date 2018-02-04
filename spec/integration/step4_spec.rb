@@ -3,7 +3,20 @@
 require "rails_helper"
 
 describe "fourth page", type: :feature, js: true do
-  def successfully_complete_flow
+
+  def input_valid_custom_color
+    select "Other", from: "user[fave_color]"
+
+    fill_in 'user[fave_color]', with: "special snowflake white"
+    click_button "Finish"
+  end
+
+  def input_valid_selected_color
+    select "Red", from: "user[fave_color]"
+    click_button "Finish"
+  end
+
+  def complete_1_to_3
     # 1
     visit onboarding_step1_path
     fill_in "First name", with: "Napolean"
@@ -19,10 +32,6 @@ describe "fourth page", type: :feature, js: true do
     find("#user_feet_tall").set(5)
 
     click_button "Next"
-
-    # 4
-    select "Red", from: "user[fave_color]"
-    click_button "Finish"
   end
 
   before do
@@ -34,26 +43,35 @@ describe "fourth page", type: :feature, js: true do
 
     expect(page).to have_content("can't be blank")
     select "Other", from: "user[fave_color]"
+    click_button "Finish"
+
     expect(page).to have_content("Please review the problems below:")
+    expect(page).to have_content("can't be blank")
   end
 
   it "form submits successfully with a custom option only if previous required fields have been filled" do
-    select "Other", from: "user[fave_color]"
-    find(".color-text").set("special snowflake white")
-    click_button "Finish"
-    expect(page).to have_content("Please review the problems below:")
+    input_valid_custom_color
+    expect(page).to have_content("First name can't be blank")
+    complete_1_to_3
 
-    successfully_complete_flow
+    expect(find(".color-text input").value).to eq("special snowflake white")
+    click_button "Finish"
 
     expect(current_path).to eq(thanks_path)
     expect(page).to have_content("Good job")
+  end
+
+  it "form saves the user if all required attrs are filled out" do
+    complete_1_to_3
+    input_valid_custom_color
+
+    expect(current_path).to eq(thanks_path)
     expect(User.last.valid?).to eq(true)
     expect(User.last.first_name).to eq("Napolean")
   end
 
   it "correctly-filled form remembers info on return" do
-    select "Red", from: "user[fave_color]"
-    click_button "Finish"
+    input_valid_selected_color
 
     visit onboarding_step3_path
     visit onboarding_step4_path
@@ -61,16 +79,12 @@ describe "fourth page", type: :feature, js: true do
   end
 
   it "correctly-filled form displays custom input on return correctly" do
-    select "Other", from: "user[fave_color]"
-        # save_and_open_page
+    input_valid_custom_color
 
-    find(".color-text").set("special snowflake white")
-    click_button "Finish"
-    save_and_open_page
     visit onboarding_step3_path
     visit onboarding_step4_path
 
-    expect(find_field("user[fave_color]").value).to eq("special snowflake white")
+    expect(find(".color-text input").value).to eq("special snowflake white")
   end
 
 
