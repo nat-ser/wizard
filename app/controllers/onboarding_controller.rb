@@ -2,16 +2,12 @@
 
 class OnboardingController < ApplicationController
   before_action :session_user, except: [ :thanks ]
-  def thanks
-  end
-
 
   def validate_step
-    # params = @session_user.attributes.merge(user_params.to_h)
-    # @user_with_all_remembered_fields  = User.new(params)
     @user = User.new(user_params)
     if @user.valid?(current_step.to_sym)
       user_params.each { |p, v| session["user"][p] = v }
+      remember_place
       redirect_to action: next_step
     else
       @session_user = @user
@@ -47,6 +43,11 @@ class OnboardingController < ApplicationController
   def session_user
     session["user"] = {} if session["user"].nil?
     @session_user = User.new(session["user"])
+  end
+
+  def remember_place
+    session["step_url"] = {} if session["step_url"].nil?
+    session["step_url"] = "/onboarding/" + next_step.to_s
   end
 
   def user_params
