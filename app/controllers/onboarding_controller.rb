@@ -42,7 +42,6 @@ class OnboardingController < ApplicationController
   end
 
   def wizard_user_from_session
-    # cannot set the session ha
     session["user"] = {} if session["user"].nil?
     @wizard_user = User.new(session["user"])
   end

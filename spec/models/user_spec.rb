@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -36,7 +37,7 @@ describe User do
       user = User.create(first_name: "nat",
                          last_name: "seryakova",
                          email: "nat@mail.com",
-                         age_range: "18-25",)
+                         age_range: "18-25")
       expect(user.valid?).to eq(false)
     end
   end

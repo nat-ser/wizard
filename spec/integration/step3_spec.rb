@@ -44,7 +44,6 @@ describe "third page", type: :feature do
   it "correctly-filled form submits and remembers info on return" do
     input_valid_age_and_height
 
-
     expect(current_path).to eq(onboarding_step4_path)
 
     visit onboarding_step3_path

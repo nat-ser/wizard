@@ -3,11 +3,10 @@
 require "rails_helper"
 
 describe "fourth page", type: :feature, js: true do
-
   def input_valid_custom_color
     select "Other", from: "user[fave_color]"
 
-    fill_in 'user[fave_color]', with: "special snowflake white"
+    fill_in "user[fave_color]", with: "special snowflake white"
     click_button "Finish"
   end
 
@@ -86,7 +85,6 @@ describe "fourth page", type: :feature, js: true do
 
     expect(find(".color-text input").value).to eq("special snowflake white")
   end
-
 
   it "back button takes user back to previous step" do
     click_link "Back"
