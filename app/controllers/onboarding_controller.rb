@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OnboardingController < ApplicationController
-  before_action :wizard_user_from_session, except: [ :thanks ]
-  before_action only: [ :step3, :step4 ] { decorate_user(@wizard_user) }
+  before_action :wizard_user_from_session, except: [:thanks]
+  before_action only: [:step3, :step4] { decorate_user(@wizard_user) }
 
   def validate_step
     decorate_user(current_step_user)
@@ -42,8 +42,13 @@ class OnboardingController < ApplicationController
   end
 
   def wizard_user_from_session
+    # cannot set the session ha
     session["user"] = {} if session["user"].nil?
     @wizard_user = User.new(session["user"])
+  end
+
+  def store_state_in_session
+    user_params.each { |p, v| session["user"][p] = v }
   end
 
   def store_place_in_session
@@ -52,7 +57,14 @@ class OnboardingController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:last_name, :first_name, :email, :age_range, :feet_tall, :inches_tall, :weight_in_lb, :fave_color)
+    params.require(:user).permit(:last_name,
+                                :first_name,
+                                :email,
+                                :age_range,
+                                :feet_tall,
+                                :inches_tall,
+                                :weight_in_lb,
+                                :fave_color)
   end
 
   def current_step
@@ -60,11 +72,7 @@ class OnboardingController < ApplicationController
   end
 
   def decorate_user(current_user)
-    @user = ViewModels::User.decorate(current_user)
-  end
-
-  def store_state_in_session
-    user_params.each { |p, v| session["user"][p] = v }
+    @view_user = ViewModels::User.decorate(current_user)
   end
 
   def current_step_user

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewModels
   class User < SimpleDelegator
     def self.decorate(user)
@@ -10,7 +12,7 @@ module ViewModels
     end
 
     def color_options
-      ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"]
+      %w[Red Orange Yellow Green Blue Purple Other]
     end
 
     def age_options

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewModels
   class Wizard
     def self.steps
@@ -11,6 +13,5 @@ module ViewModels
     def self.next_step_path(current_step)
       "/onboarding/" + next_step(current_step)
     end
-
   end
 end
