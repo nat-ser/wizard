@@ -7,12 +7,16 @@
     <% end %>
 
     <div class="form-inputs color-select">
-      <%= f.input :fave_color, collection: ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Other"], label: "Favorite Color" %>
+      <%= f.input :fave_color, collection: @user.color_options, label: "Favorite Color" %>
     </div>
 
     <div class="form-inputs color-text">
-      <% if @view_user.display_prefilled_custom_color_form? %>
-          <label class='control-label required' for='user_fave_color'><abbr title='required'>*</abbr> Custom Color</label><input type='text' name='user[fave_color]' value='<%=@session_user.fave_color%>' class='form-control'>
+      <% if @user.submitted_custom_fave_color? %>
+          <label class='control-label required' for='user_fave_color'>
+            <abbr title='required'>*</abbr> Custom Color
+          </label>
+
+          <input type='text' name='user[fave_color]' value='<%=@session_user.fave_color%>' class='form-control'>
       <% end %>
     </div>
 

@@ -2,31 +2,29 @@
 
 class OnboardingController < ApplicationController
   before_action :session_user, except: [ :thanks ]
-
-  def step4
-    @view_user = ViewModels::User.decorate(@session_user)
-  end
+  before_action only: [ :step3, :step4 ] { decorate_user(@session_user) }
 
   def validate_step
-    @user = User.new(user_params)
-    if @user.valid?(current_step.to_sym)
+    user = User.new(user_params)
+    decorate_user(user)
+    if user.valid?(current_step.to_sym)
       user_params.each { |p, v| session["user"][p] = v }
       remember_place
       redirect_to action: next_step
     else
-      @session_user = @user
+      @session_user = user
       render current_step
     end
   end
 
   def create
-    @user = User.new(user_params)
-    @view_user = ViewModels::User.decorate(@user)
-    if @user.valid?(current_step.to_sym)
+    user = User.new(user_params)
+    decorate_user(user)
+    if user.valid?(current_step.to_sym)
       user_params.each { |p, v| session["user"][p] = v }
       validate_entire_user
     else
-      @session_user = @user
+      @session_user = user
       render current_step
     end
   end
@@ -69,5 +67,9 @@ class OnboardingController < ApplicationController
 
   def next_step
     steps[steps.index(current_step) + 1] || step1
+  end
+
+  def decorate_user(current_user)
+    @user = ViewModels::User.decorate(current_user)
   end
 end
