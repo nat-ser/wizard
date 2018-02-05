@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OnboardingController < ApplicationController
-  before_action :session_user, except: [ :thanks ]
-  before_action only: [ :step3, :step4 ] { decorate_user(@session_user) }
+  before_action :wizard_user_from_session, except: [ :thanks ]
+  before_action only: [ :step3, :step4 ] { decorate_user(@wizard_user) }
 
   def validate_step
     user = User.new(user_params)
@@ -12,7 +12,7 @@ class OnboardingController < ApplicationController
       remember_place
       redirect_to action: next_step
     else
-      @session_user = user
+      @wizard_user = user
       render current_step
     end
   end
@@ -24,7 +24,7 @@ class OnboardingController < ApplicationController
       user_params.each { |p, v| session["user"][p] = v }
       validate_entire_user
     else
-      @session_user = user
+      @wizard_user = user
       render current_step
     end
   end
@@ -33,19 +33,19 @@ class OnboardingController < ApplicationController
 
   def validate_entire_user
     # validate session user here because it encompasses all of the attrs
-    if @session_user.save(context: :create)
+    if @wizard_user.save(context: :create)
       reset_session
       flash[:success] = "Good job"
       redirect_to thanks_url
     else
-      flash[:error] = @session_user.errors.full_messages.join(" / ")
+      flash[:error] = @wizard_user.errors.full_messages.join(" / ")
       redirect_to action: current_step
     end
   end
 
-  def session_user
+  def wizard_user_from_session
     session["user"] = {} if session["user"].nil?
-    @session_user = User.new(session["user"])
+    @wizard_user = User.new(session["user"])
   end
 
   def remember_place
