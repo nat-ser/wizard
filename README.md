@@ -21,14 +21,14 @@
 - In the `OnBoardingController.rb`, I define `@wizard_user`, `@view_user`, and `current_step_user`
 These are the distinctions:
 
-##### @wizard_user
-# a user instance containing all gathered data thus far from the session
+#### @wizard_user
+- a user instance containing all gathered data thus far from the session
 
-##### @view_user
-# an instance of ViewModels::User, which inherits all user methods to clean up views
+#### @view_user
+- an instance of ViewModels::User, which inherits all user methods to clean up views
 
 #### current_step_user
-# a user instance initialized from the current step before validations run. If the validations pass, the current_step_user attributes are stored in the session
+- a user instance initialized from the current step before validations run. If the validations pass, the current_step_user attributes are stored in the session
 
 
 #### What needs work:
@@ -38,4 +38,4 @@ These are the distinctions:
 - Javascript is hacky `step4.js` -> ideally I would remake the form to accept separate parameters for selected or custom color instead of trying to fit inside Railsy conventions
 
 
-[APP url](https://magical-form.herokuapp.com/)
+[Application URL](https://magical-form.herokuapp.com/)
