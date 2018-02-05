@@ -12,11 +12,7 @@
 
     <div class="form-inputs color-text">
       <% if @user.submitted_custom_fave_color? %>
-          <label class='control-label required' for='user_fave_color'>
-            <abbr title='required'>*</abbr> Custom Color
-          </label>
-
-          <input type='text' name='user[fave_color]' value='<%=@session_user.fave_color%>' class='form-control'>
+        <%= f.input :fave_color, label: "Custom Color", input_html: { value: @session_user.fave_color } %>
       <% end %>
     </div>
 
