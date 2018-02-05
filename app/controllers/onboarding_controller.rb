@@ -3,29 +3,26 @@
 class OnboardingController < ApplicationController
   before_action :wizard_user_from_session, except: [ :thanks ]
   before_action only: [ :step3, :step4 ] { decorate_user(@wizard_user) }
-  before_action except: [ :valid]
 
   def validate_step
-    user = User.new(user_params)
-    decorate_user(user)
-    if user.valid?(current_step.to_sym)
-      user_params.each { |p, v| session["user"][p] = v }
-      remember_place
+    decorate_user(current_step_user)
+    if current_step_user.valid?(current_step.to_sym)
+      store_state_in_session
+      store_place_in_session
       redirect_to action: ViewModels::Wizard.next_step(current_step)
     else
-      @wizard_user = user
+      @wizard_user = current_step_user
       render current_step
     end
   end
 
   def create
-    user = User.new(user_params)
-    decorate_user(user)
-    if user.valid?(current_step.to_sym)
-      user_params.each { |p, v| session["user"][p] = v }
+    decorate_user(current_step_user)
+    if current_step_user.valid?(current_step.to_sym)
+      store_state_in_session
       validate_entire_user
     else
-      @wizard_user = user
+      @wizard_user = current_step_user
       render current_step
     end
   end
@@ -49,9 +46,9 @@ class OnboardingController < ApplicationController
     @wizard_user = User.new(session["user"])
   end
 
-  def remember_place
+  def store_place_in_session
     session["step_url"] = {} if session["step_url"].nil?
-    session["step_url"] = "/onboarding/" + ViewModels::Wizard.next_step(current_step).to_s
+    session["step_url"] = ViewModels::Wizard.next_step_path(current_step)
   end
 
   def user_params
@@ -64,5 +61,13 @@ class OnboardingController < ApplicationController
 
   def decorate_user(current_user)
     @user = ViewModels::User.decorate(current_user)
+  end
+
+  def store_state_in_session
+    user_params.each { |p, v| session["user"][p] = v }
+  end
+
+  def current_step_user
+    @current_step_user ||= User.new(user_params)
   end
 end
