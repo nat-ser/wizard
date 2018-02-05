@@ -1,9 +1,9 @@
 <div class="container-fluid">
-  <%= simple_form_for(@session_user, url: validate_step_path) do |f| %>
+  <%= simple_form_for(@wizard_user, url: validate_step_path) do |f| %>
     <%= f.error_notification %>
 
     <div class="form-inputs">
-      <%= f.input :age_range, collection: ["17 or younger", "18-25", "26-35", "36-45", "46 or older"], label: "Age" %>
+      <%= f.input :age_range, collection: @view_user.age_options, label: "Age" %>
     </div>
 
     <div class="form-inputs">
